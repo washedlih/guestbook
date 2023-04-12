@@ -42,7 +42,7 @@ export default async function Home() {
         </h1>
         <div className="mb-4 text-sm font-medium text-neutral-400">
           <a
-            href="https://www.washedlih.com/"
+            href="https://github.com/washedlih/guestbook"
             className="hover:text-white hover:underline hover:decoration-white hover:underline-offset-2"
             target="_blank"
             rel="noopener noreferrer"
