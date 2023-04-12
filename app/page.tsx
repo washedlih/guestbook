@@ -72,7 +72,7 @@ export default async function Home() {
               <p>
                 <span className="font-medium text-neutral-200">{post.user.name} </span>
                 <span className="text-xs text-neutral-400">
-                  {new Date(post.createdAt).toLocaleString().replace(",", "")}
+                  {post.createdAt.toLocaleString().replace(",", "")}
                 </span>
               </p>
               <p className="break-words text-justify">{post.message}</p>

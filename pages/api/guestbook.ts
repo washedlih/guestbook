@@ -21,9 +21,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         data: {
           message: post.message as string,
           userEmail: prismaUser?.email as string,
+          createdAt: new Date() as Date,
         },
       });
-      
+
       return res.status(200).send("Post created");
     } catch (error) {
       return res.status(500).send("Something went wrong");
