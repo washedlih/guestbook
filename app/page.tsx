@@ -1,91 +1,94 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from './page.module.css'
+import { SignIn, SignOut } from "components/actions";
+import Delete from "components/delete";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "pages/api/auth/[...nextauth]";
+import Form from "components/form";
+import prisma from "@/lib/prisma";
 
-const inter = Inter({ subsets: ['latin'] })
+async function getPosts() {
+  const data = await prisma.post.findMany({
+    include: {
+      user: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 100,
+  });
+  return data;
+}
 
-export default function Home() {
+export default async function Home() {
+  const posts = await getPosts();
+  const session = await getServerSession(authOptions);
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
+    <main className="flex flex-col items-center justify-center font-inter text-white">
+      <section className="w-full max-w-[500px]">
+        <h1 className="font-erode text-4xl">
+          Guestbook{" "}
+          <span className="font-inter text-sm font-medium text-neutral-400">
+            {" "}
+            by{" "}
+            <a
+              href="https://www.washedlih.com/"
+              className="hover:text-white hover:underline hover:decoration-white hover:underline-offset-2"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              washedlih
+            </a>
+          </span>
+        </h1>
+        <div className="mb-4 text-sm font-medium text-neutral-400">
           <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+            href="https://www.washedlih.com/"
+            className="hover:text-white hover:underline hover:decoration-white hover:underline-offset-2"
             target="_blank"
             rel="noopener noreferrer"
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
+            GitHub
+          </a>
+          <a
+            href="https://twitter.com/washedlih"
+            className="ml-2 hover:text-white hover:underline hover:decoration-white hover:underline-offset-2"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Twitter
           </a>
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
+        {session?.user ? (
+          <>
+            <Form />
+            <SignOut />
+          </>
+        ) : (
+          <SignIn />
+        )}
+        <div className="mt-6 flex flex-col">
+          {posts.map((post) => (
+            <div key={post.id} className="mb-4 flex flex-col text-sm">
+              <p>
+                <span className="font-medium text-neutral-200">{post.user.name} </span>
+                <span className="text-xs text-neutral-400">
+                  {new Date(post.createdAt)
+                    .toLocaleString("en-US", {
+                      year: "numeric",
+                      month: "numeric",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                    })
+                    .replace(",", "")}
+                </span>
+              </p>
+              <p className="break-words text-justify">{post.message}</p>
+              {session?.user?.email === "khanglee11@gmail.com" && <Delete postId={post.id} />}
+            </div>
+          ))}
         </div>
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      </section>
     </main>
-  )
+  );
 }
