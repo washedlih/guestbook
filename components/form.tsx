@@ -7,7 +7,7 @@ export default function Form() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [placeholder, setPlaceholder] = useState("Your message...");
   const router = useRouter();
-  
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsSubmitting(true);
@@ -25,7 +25,7 @@ export default function Form() {
     setIsSubmitting(false);
     router.refresh();
   }
-  
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -34,7 +34,7 @@ export default function Form() {
       } relative mb-1 w-full text-neutral-100 transition-all`}
     >
       <input
-        className="h-full w-full rounded-md bg-neutral-800 py-2 pl-4 pr-24 outline-2 outline-neutral-100 placeholder:text-neutral-400 focus:outline"
+        className="w-full rounded-md border border-neutral-800 bg-neutral-800 py-2 pl-4 pr-24 outline-none transition-all placeholder:text-neutral-400 focus:border-blue-800"
         type="text"
         onChange={(e) => setMessage(e.target.value)}
         placeholder={placeholder}
@@ -44,7 +44,7 @@ export default function Form() {
       <button
         className={`${
           isSubmitting && `cursor-not-allowed`
-        } absolute right-1 top-1 flex h-7 w-16 items-center justify-center rounded bg-neutral-700 px-2 py-1 font-medium`}
+        } absolute right-1 top-1 rounded bg-neutral-700 px-4 py-1 font-medium`}
         disabled={isSubmitting}
         type="submit"
       >
