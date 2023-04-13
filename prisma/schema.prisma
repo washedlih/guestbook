@@ -11,6 +11,7 @@ datasource db {
 model Post {
   id        String   @id @default(cuid())
   userEmail String
+  createdAt DateTime @default(now()) 
   message   String   @db.Text
   user      User     @relation(fields: [userEmail], references: [email])
 

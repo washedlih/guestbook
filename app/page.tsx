@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import Form from "components/form";
 import prisma from "@/lib/prisma";
+import Time from "@/components/time";
 
 async function getPosts() {
   const data = await prisma.post.findMany({
@@ -71,9 +72,7 @@ export default async function Home() {
             <div key={post.id} className="mb-4 flex flex-col text-sm">
               <p>
                 <span className="font-medium text-neutral-200">{post.user.name} </span>
-                <span className="text-xs text-neutral-400">
-                  {post.createdAt.toLocaleString().replace(",", "")}
-                </span>
+                <Time time={post.createdAt} />
               </p>
               <p className="break-words text-justify">{post.message}</p>
               {session?.user?.email === "khanglee11@gmail.com" && <Delete postId={post.id} />}
