@@ -69,9 +69,9 @@ export default async function Home() {
         <div className="mt-6 flex flex-col">
           {posts.map((post) => (
             <div key={post.id} className="mb-4 flex flex-col text-sm">
-              <p>
-                <span className="font-medium text-neutral-200">{post.user.name} </span>
-                <span className="text-xs text-neutral-400">
+              <p className="text-justify">
+                <span className="font-medium text-neutral-200">{post.user.name}: </span>
+                {/* <span className="text-xs text-neutral-400">
                   {new Date(post.createdAt)
                     .toLocaleString("en-US", {
                       year: "numeric",
@@ -81,9 +81,9 @@ export default async function Home() {
                       minute: "numeric",
                     })
                     .replace(",", "")}
-                </span>
+                </span> */}
+                <span>{post.message}</span>
               </p>
-              <p className="break-words text-justify">{post.message}</p>
               {session?.user?.email === "khanglee11@gmail.com" && <Delete postId={post.id} />}
             </div>
           ))}
