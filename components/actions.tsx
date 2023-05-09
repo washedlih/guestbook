@@ -3,10 +3,7 @@ import { signIn, signOut } from "next-auth/react";
 
 export function SignOut() {
   return (
-    <button
-      className="group flex items-center justify-center text-sm"
-      onClick={() => signOut()}
-    >
+    <button className="group flex items-center justify-center text-sm" onClick={() => signOut()}>
       Sign out
       <span className="inline-block duration-300 group-hover:translate-x-[3px]">
         <svg
@@ -16,7 +13,7 @@ export function SignOut() {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
+          strokeWidth="2"
           stroke-linecap="round"
           stroke-linejoin="round"
         >
