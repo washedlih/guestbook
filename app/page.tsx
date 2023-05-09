@@ -32,7 +32,7 @@ export default async function Home() {
             by{" "}
             <a
               href="https://www.washedlih.com/"
-              className="hover:text-white hover:underline hover:decoration-white hover:underline-offset-2"
+              className="text-white hover:text-white hover:underline hover:decoration-neutral-400 hover:underline-offset-2"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -43,7 +43,7 @@ export default async function Home() {
         <div className="mb-4 text-sm font-medium text-neutral-400">
           <a
             href="https://github.com/washedlih/guestbook"
-            className="hover:text-white hover:underline hover:decoration-white hover:underline-offset-2"
+            className="hover:text-white hover:underline hover:decoration-neutral-400 hover:underline-offset-2"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -51,7 +51,7 @@ export default async function Home() {
           </a>
           <a
             href="https://twitter.com/washedlih"
-            className="ml-2 hover:text-white hover:underline hover:decoration-white hover:underline-offset-2"
+            className="ml-2 hover:text-white hover:underline hover:decoration-neutral-400 hover:underline-offset-2"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -69,7 +69,7 @@ export default async function Home() {
         <div className="mt-6 flex flex-col">
           {posts.map((post) => (
             <div key={post.id} className="mb-4 flex flex-col text-sm">
-              <p className="text-justify">
+              <p>
                 <span className="font-medium text-neutral-200">{post.user.name}: </span>
                 {/* <span className="text-xs text-neutral-400">
                   {new Date(post.createdAt)
